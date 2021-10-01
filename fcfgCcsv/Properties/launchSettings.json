@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "fcfgCcsv": {
+      "commandName": "Project",
+      "commandLineArgs": "O:\\Users\\usr2\\Documents\\FlashPrint\\PLA1.fcfg O:\\Users\\usr2\\Documents\\FlashPrint\\PLA1.csv"
+    }
+  }
+}
