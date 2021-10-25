@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fcfgCcsv", "fcfgCcsv\fcfgCcsv.csproj", "{D3560B0C-C03C-4D67-8BC6-71977FDB3942}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fcfgCcsv", "fcfgCcsv\fcfgCcsv.csproj", "{D3560B0C-C03C-4D67-8BC6-71977FDB3942}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fcfg2cvs_js", "fcfg2cvs_js", "{10129B94-4AC1-4F6B-A407-6F7832BDA8F2}"
+	ProjectSection(SolutionItems) = preProject
+		fcfg2csv\convert.html = fcfg2csv\convert.html
+		fcfg2csv\fcfg2csv.js = fcfg2csv\fcfg2csv.js
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
