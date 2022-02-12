@@ -45,8 +45,23 @@ var unescapeToView = function (str) {
       if (str.charAt(i) === '0') {
         rslt.push(0x00);
       }
+      else if (str.charAt(i) === 'f') {
+        rslt.push(0x0C);
+      }
+      else if (str.charAt(i) === 'a') {
+          rslt.push(0x07);
+      }
+      else if (str.charAt(i) === 'r') {
+          rslt.push(0x0D);
+      }
       else if (str.charAt(i) === 'x') {
-        rslt.push(Number('0x' + str.charAt(++i) + str.charAt(++i)));
+        var ch = str.charAt(i + 2);
+        if (ch >= '0' && ch <= '9' || ch >= 'a' && ch <= 'f') {
+          rslt.push(Number('0x' + str.charAt(++i) + str.charAt(++i)));
+        }
+        else {
+          rslt.push(Number('0x' + str.charAt(++i)));
+        }
       }
     }
     else {

@@ -3,11 +3,50 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace fcfgCcsv
 {
     class Program
     {
+        static byte[] unescapeStringAndReverse(string str)
+        {
+            List<Byte> result = new List<byte>();
+            for (var i = 0; i < str.Length; i++) {
+                if (str[i] == '\\') {
+                    i++;
+                    if (str[i] == '0') {
+                        result.Add(0x00);
+                    }
+                    else if (str[i] == 'f') {
+                        result.Add(0x0C);
+                    }
+                    else if (str[i] == 'a') {
+                        result.Add(0x07);
+                    }
+                    else if (str[i] == 'r') {
+                        result.Add(0x0D);
+                    }
+                    else if (str[i] == 'x') {
+                        i++;
+                        // 後の2文字を調べる
+                        if (Byte.TryParse(str.Substring(i, 2), System.Globalization.NumberStyles.HexNumber, null, out byte ret)) {
+                            i++;
+                            result.Add(ret);
+                        }
+                        else if (Byte.TryParse(str.Substring(i, 1), System.Globalization.NumberStyles.HexNumber, null, out byte ret1)) {
+                            result.Add(ret1);
+                        }
+                    }
+                }
+                else {
+                    result.Add((byte)str[i]);
+                }
+            }
+            result.Reverse();
+            return result.ToArray();
+        }
+
         static void WriteParameter(TextWriter writer, String parameterFile)
         {
             var iniFile = new ConfigurationBuilder()
@@ -23,8 +62,7 @@ namespace fcfgCcsv
                             // 上のものをByte[]に変換しそれをリバースした結果をToSignleで値にする
                             var start = item.Value.IndexOf('(') + 1;
                             var end = item.Value.IndexOf(')');
-                            var str = Regex.Unescape(item.Value.Substring(start, end - start));
-                            var bytes = str.ToCharArray().Select(b => (byte)b).Reverse().ToArray();
+                            var bytes = unescapeStringAndReverse(item.Value.Substring(start, end - start));
                             var value = BitConverter.ToSingle(bytes);
                             writer.WriteLine("{0},{1}", item.Key, value);
                         }
